@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Update Your Hire Space Availability — Borough Yards</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --border: #e2e2e2;
+      --text: #1a1a1a;
+      --text-muted: #6b6b6b;
+      --accent: #3b6cf4;
+      --accent-light: #eef2ff;
+      --accent-hover: #2c57d8;
+      --step-inactive: #d1d5db;
+      --radius: 10px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .brand-divider {
+      width: 1px;
+      height: 18px;
+      background: var(--border);
+    }
+    .brand-title {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 720px;
+      margin: 48px auto 0;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .hero p {
+      margin-top: 12px;
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Overview cards ── */
+    .overview {
+      max-width: 720px;
+      margin: 36px auto 0;
+      padding: 0 24px;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    @media (max-width: 520px) {
+      .overview-grid { grid-template-columns: 1fr; }
+    }
+    .sheet-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .sheet-card .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .tag-you { background: #dcfce7; color: #166534; }
+    .tag-auto { background: #f1f5f9; color: #475569; }
+    .sheet-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .sheet-card p { font-size: 14px; color: var(--text-muted); }
+    .sheet-link { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
+    .sheet-link:hover { text-decoration: underline; }
+
+    .overview-note {
+      margin-top: 16px;
+      background: var(--accent-light);
+      border: 1px solid #c7d4fc;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #1e3a8a;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .overview-note .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Section label ── */
+    .section-label {
+      max-width: 720px;
+      margin: 44px auto 0;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── Step dots ── */
+    .step-dots {
+      max-width: 720px;
+      margin: 16px auto 0;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--step-inactive);
+      transition: background 0.25s, transform 0.2s;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+    .dot.done {
+      background: #93c5fd;
+    }
+    .step-count {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ── Step card ── */
+    .step-wrapper {
+      max-width: 720px;
+      margin: 16px auto 0;
+      padding: 0 24px;
+      position: relative;
+    }
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .step-card.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-header {
+      padding: 24px 28px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-header-text h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .step-header-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .step-body {
+      padding: 20px 28px 24px;
+    }
+    .step-body ul {
+      padding-left: 18px;
+      margin-top: 10px;
+    }
+    .step-body li {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .step-body li strong { color: var(--text); }
+
+    /* ── Image placeholder ── */
+    .img-placeholder {
+      margin-top: 20px;
+      background: #f4f4f5;
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+    .img-placeholder .ph-icon {
+      font-size: 28px;
+      opacity: 0.4;
+    }
+    .img-placeholder .ph-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .img-placeholder .ph-filename {
+      font-size: 11px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      background: #e5e7eb;
+      color: #374151;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    /* When a real image is placed, hide the placeholder UI */
+    .img-placeholder img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    /* ── Navigation buttons ── */
+    .step-nav {
+      max-width: 720px;
+      margin: 16px auto 0;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+    }
+    .btn:hover:not(:disabled) { background: #f3f4f6; }
+    .btn:disabled { opacity: 0.35; cursor: default; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
+    .btn-success {
+      background: #16a34a;
+      color: #fff;
+      border-color: #16a34a;
+    }
+    .btn-success:hover:not(:disabled) { background: #15803d; }
+
+    /* ── FAQ ── */
+    .faq {
+      max-width: 720px;
+      margin: 40px auto 0;
+      padding: 0 24px;
+    }
+    .faq h2 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 12px;
+    }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 16px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .faq-q:hover { background: #f9f9f9; }
+    .faq-q .chevron {
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .faq-q.open .chevron { transform: rotate(180deg); }
+    .faq-a {
+      display: none;
+      padding: 0 20px 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .faq-a.open { display: block; }
+
+    /* ── Footer ── */
+    footer {
+      max-width: 720px;
+      margin: 48px auto 0;
+      padding: 0 24px 48px;
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1416.02 147.73" style="height:22px;width:auto;flex-shrink:0;" aria-label="Borough Yards">
+      <style>.cls-1{fill:#1d1d1b}</style>
+      <g><g><g><path class="cls-1" d="M181.47,59.42c0-15.45-.99-24.89-15.62-24.89s-15.62,9.44-15.62,24.89v28.91c0,15.45.99,24.89,15.62,24.89s15.62-9.44,15.62-24.89v-28.91ZM215.47,98.96c0,13.25-2.77,48.77-49.62,48.77s-49.61-35.53-49.61-48.77v-50.18C116.24,35.53,119.01,0,165.85,0s49.62,35.53,49.62,48.78v50.18Z"/><path class="cls-1" d="M267.66,38.34v27.1h16.21c9.48,0,14.23-1.21,14.23-13.65s-4.75-13.65-14.23-13.45h-16.21ZM343.17,144.12h-37.95l-22.34-43.95h-15.22v43.95h-34.39V3.61h49.42c35.18,0,49.41,15.26,49.41,48.18,0,19.07-4.15,31.51-16.4,40.54l27.48,51.78Z"/><path class="cls-1" d="M413.74,59.42c0-15.45-.99-24.89-15.62-24.89s-15.62,9.44-15.62,24.89v28.91c0,15.45.99,24.89,15.62,24.89s15.62-9.44,15.62-24.89v-28.91ZM447.74,98.96c0,13.25-2.77,48.77-49.62,48.77s-49.61-35.53-49.61-48.77v-50.18C348.51,35.53,351.28,0,398.12,0s49.62,35.53,49.62,48.78v50.18Z"/><path class="cls-1" d="M498.34,3.61v84.71c0,15.45.99,24.89,15.62,24.89s15.62-9.44,15.62-24.89V3.61h33.99v95.35c0,13.25-2.77,48.77-49.61,48.77s-49.61-35.53-49.61-48.77V3.61h33.99Z"/><path class="cls-1" d="M646.8,56.2c-.79-13.85-2.37-21.68-17-21.68s-15.62,9.44-15.62,24.89v28.91c0,15.45.99,24.89,15.62,24.89s15.62-9.44,15.62-19.27h-17.39v-28.1h51.39v33.12c0,13.25-2.77,48.77-49.62,48.77s-49.61-35.53-49.61-48.77v-50.18C580.18,35.53,582.95,0,629.8,0s49.81,35.53,49.81,48.78l-32.81,7.42Z"/></g><polygon class="cls-1" points="730.81 3.61 730.81 65.84 761.64 65.84 761.64 3.61 795.64 3.61 795.64 144.12 761.64 144.12 761.64 100.37 730.81 100.37 730.81 144.12 696.81 144.12 696.81 3.61 730.81 3.61"/><polygon class="cls-1" points="883.11 3.61 900.89 48.78 918.68 3.61 959.8 3.61 920.66 92.73 920.66 144.12 881.12 144.12 881.12 92.73 841.79 3.61 883.11 3.61"/><g><path class="cls-1" d="M1026.02,52.19c0-9.63-1.38-14.45-14.43-14.45s-14.43,4.82-14.43,14.45v27.7h28.86v-27.7ZM1060.02,144.12h-34s0-29.5,0-29.5h-28.86v29.5h-34V52.19c0-25.29,3.96-52.19,48.43-52.19,44.48,0,48.43,26.9,48.43,52.19v91.93Z"/><path class="cls-1" d="M1113.19,38.34v27.1h16.21c9.48,0,14.23-1.21,14.23-13.65s-4.75-13.65-14.23-13.45h-16.21ZM1188.7,144.12h-37.95l-22.34-43.95h-15.22v43.95h-34.39V3.61h49.42c35.18,0,49.41,15.26,49.41,48.18,0,19.07-4.15,31.51-16.4,40.54l27.48,51.78Z"/><path class="cls-1" d="M1250.58,109.6c9.48,0,14.23-1.61,14.23-13.65v-44.16c0-12.45-4.75-13.65-14.23-13.65h-16.6v71.46h16.6ZM1249.99,3.61c37.16,0,49.41,15.26,49.41,48.18v43.95c0,32.92-12.25,48.37-49.41,48.37h-50.01V3.61h50.01Z"/><path class="cls-1" d="M1379.65,50.58c-1.58-12.24-8.5-15.65-18.18-15.65-7.71,0-12.45,4.62-11.66,9.24,2.77,15.66,66.21,15.25,66.21,61.42,0,6.02-6.72,41.55-53.56,41.55-42.3,0-51.59-27.1-51.59-44.76l33.6-7.43c.99,14.45,8.3,17.66,17.99,17.66s16.8-5.82,15.61-11.24c-3.75-17.06-64.24-13.24-64.24-59.41-.2-6.02,3.36-41.55,47.64-41.55,41.51,0,51.59,25.09,51.59,42.75l-33.41,7.42Z"/><path class="cls-1" d="M52.19,112.68h-18.38v-23.47h18.78c9.49,0,13.83,1.55,13.83,11.96s-4.74,11.51-14.23,11.51M33.8,36.02h18.38c9.48,0,14.23,1.1,14.23,11.51s-4.34,11.96-13.83,11.96h-18.78v-23.47ZM88.82,74.41s-.03-.05-.05-.07c.02-.02.03-.05.05-.06,8.07-4.23,13.97-15.27,13.97-28.97,0-27.46-10.87-40.74-48.04-40.74H0v139.55h54.75c37.16,0,48.04-13.28,48.04-40.74,0-13.7-5.9-24.73-13.97-28.97"/></g></g></g>
+    </svg>
+    <div class="brand-divider"></div>
+    <span class="brand-title">Hire Spaces Booking Data Guide</span>
+    <div style="flex:1"></div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 66.3" style="height:24px;width:auto;flex-shrink:0;" aria-label="Smart Soho">
+      <g><path style="fill:#E84740" d="M4.9,22.5c0.6,1.1,2.9,4.4,9.3,4.4c1.1,0,2.1-0.2,3.2-0.5c2.1-1,2.6-2.4,2.6-3.2c0-1.9-1.3-2.6-2.3-2.9c-0.6-0.3-0.8-0.3-3.4-1l-3.6-1c-1.9-0.5-2.9-0.6-3.6-1.1c-1.5-0.5-5-2.3-5-7.1c0-5.5,4.7-9.3,11.5-9.3c6.3,0,9.7,3.2,11.9,6L21.2,10c-1-1.5-2.9-4.2-7.6-4.2C10.4,5.8,8,7.1,8,9.2c0,2.6,2.8,3.1,5.4,3.4l3.1,0.6c3.9,0.8,9.6,2.6,9.6,8.8c0,6.8-6.2,9.6-12.5,9.6c-1.6,0-3.4-0.2-5.2-0.6c-1.9-0.6-5.4-2.1-7.6-5.5L4.9,22.5z"/><path style="fill:#E84740" d="M57.1,1.7V31h-5.5l0.5-24l-6.3,24h-4.9l-6.3-24L35,31h-5.4V1.7h8l5.7,21.9l5.5-21.9C49.1,1.7,57.1,1.7,57.1,1.7z"/><path style="fill:#E84740" d="M78.4,25.4h-11l-1.8,5.7h-5.8l9.9-29.2h6.3l9.9,29.2H80L78.4,25.4z M76.9,20.6L73,7.1l-4.1,13.5H76.9z"/><path style="fill:#E84740" d="M89.1,1.7h9.4c3.9,0,6.5,0,9.3,2.1c1.8,1.6,3.2,3.9,3.2,7.3c0,5.5-4.1,7.6-5.8,8.1l6.5,11.9h-6.3l-5.8-10.9h-4.9v10.9h-5.7L89.1,1.7L89.1,1.7z M94.4,6.4v9.3h1.9c1.9,0,2.6,0,3.6-0.2c1.3,0,5.2-0.3,5.2-4.5c0-0.6,0-2.9-2.4-3.9c-1.1-0.6-2.6-0.6-5.8-0.6L94.4,6.4L94.4,6.4z"/><path style="fill:#E84740" d="M134.2,6.7h-8.1v24.4h-5.5V6.7h-8v-5h21.6V6.7z"/><path style="fill:#E84740" d="M4.8,56c0.6,1.1,2.9,4.4,9.3,4.4c1.1,0,2.1-0.2,3.2-0.5c2.1-1,2.6-2.4,2.6-3.2c0-1.9-1.3-2.6-2.3-2.9c-0.6-0.3-0.8-0.3-3.4-1l-3.4-0.8c-1.9-0.5-2.9-0.6-3.6-1.1c-1.3-0.5-4.9-2.4-4.9-7.1c0-5.5,4.7-9.3,11.5-9.3c6.3,0,9.7,3.2,11.9,6l-4.4,3.2c-1-1.5-2.9-4.4-7.6-4.4c-3.1,0-5.5,1.3-5.5,3.6c0,2.6,2.8,3.1,5.4,3.4l3.1,0.6c3.9,0.8,9.6,2.6,9.6,8.8c0,6.8-6.2,9.6-12.5,9.6c-1.6,0-3.4-0.2-5.2-0.6c-1.9-0.6-5.4-2.1-7.6-5.5L4.8,56z"/><path style="fill:#E84740" d="M42.3,65.6c-3.6,0-7.1-1.1-10.1-4.4c-2.9-3.2-3.9-7.1-3.9-10.9c0-9.1,6-15.6,14.1-15.6c7.3,0,14.1,5.4,14.1,15.4C56.4,58.6,51.2,65.6,42.3,65.6z M42.3,39.7c-5,0-8.4,4.1-8.4,10.1c0,6.7,3.6,10.6,8.6,10.6c3.6,0,8.4-2.8,8.6-9.7C50.9,45.1,48.1,39.7,42.3,39.7z"/><path style="fill:#E84740" d="M83.4,35.5v29.4h-5.5V51.6H65.2v13.3h-5.5V35.5h5.5v11h12.7v-11C77.9,35.5,83.4,35.5,83.4,35.5z"/><path style="fill:#E84740" d="M100.9,65.6c-3.6,0-7.1-1.1-10.1-4.4C87.9,57.9,87,54,87,50.3c0-9.1,6-15.6,14.1-15.6c7.3,0,14.1,5.4,14.1,15.4C115.1,58.6,109.9,65.6,100.9,65.6z M100.9,39.7c-5,0-8.4,4.1-8.4,10.1c0,6.7,3.6,10.6,8.6,10.6c3.6,0,8.4-2.8,8.6-9.7C109.7,45.1,106.8,39.7,100.9,39.7z"/></g>
+    </svg>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>How to Update Your Hire Space Availability</h1>
+  </section>
+
+  <!-- Overview -->
+  <section class="overview">
+    <div class="overview-grid">
+      <div class="sheet-card">
+        <span class="tag tag-you">You work here</span>
+        <h3>Booking Sheet</h3>
+        <p>Private. Edit availability here — add, update, or remove entries.</p>
+        <a href="https://docs.google.com/spreadsheets/d/1B900fvFK70OX7GLVuhSg_sOyuFv9-PesOj9hxCP79so/edit?gid=0#gid=0" target="_blank" class="sheet-link">Open Booking Sheet ↗</a>
+      </div>
+      <div class="sheet-card">
+        <span class="tag tag-auto">Hands off</span>
+        <h3>Public Data Sheet</h3>
+        <p>Auto-updated on sync. You never need to touch this.</p>
+        <a href="https://docs.google.com/spreadsheets/d/19OJPsW20-DwhbuRuvcjMKAwSjpumDMQuiX20XonZ6Nc/edit?gid=0#gid=0" target="_blank" class="sheet-link">Open Public Data Sheet ↗</a>
+      </div>
+    </div>
+    <div class="overview-note">
+      <span class="icon">&#128161;</span>
+      <span><strong>TL;DR:</strong> Edit the Booking Sheet, click Sync. Done.</span>
+    </div>
+  </section>
+
+  <!-- Step dots -->
+  <div class="section-label">Step-by-step guide</div>
+  <div class="step-dots" id="stepDots">
+    <!-- generated by JS -->
+  </div>
+
+  <!-- Step cards -->
+  <div class="step-wrapper" id="stepWrapper">
+
+    <div class="step-card active" data-step="1">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <div class="step-header-text">
+          <h2>Get Access</h2>
+          <p>Smart Soho will share both sheets with you via email.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Accept both sharing invites — <strong>edit access to both sheets</strong> is required for Sync to work.</li>
+          <li>To add another team member, contact Smart Soho or share directly from Google Sheets.</li>
+        </ul>
+        <div class="img-placeholder" id="ph-step1">
+          <span class="ph-icon">&#128247;</span>
+          <span class="ph-label">Screenshot: Google Sheets sharing invite email</span>
+          <span class="ph-filename">img-step1-access-email.png</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card" data-step="2">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <div class="step-header-text">
+          <h2>Open the Booking Sheet</h2>
+          <p>The only sheet you'll ever edit.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Open the <strong>Borough Yards Booking Sheet</strong> from the link shared with you.</li>
+          <li>You'll see columns for unit name, time period, and availability status.</li>
+        </ul>
+        <div class="img-placeholder" id="ph-step2">
+          <span class="ph-icon">&#128247;</span>
+          <span class="ph-label">Screenshot: Borough Yards Booking Sheet overview</span>
+          <span class="ph-filename">img-step2-open-sheet.png</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card" data-step="3">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <div class="step-header-text">
+          <h2>Edit Availability</h2>
+          <p>Add, update, or remove rows as needed.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li><strong>Add:</strong> fill in a new row — unit name, time period, status.</li>
+          <li><strong>Update:</strong> click a cell and type the new value.</li>
+          <li><strong>Remove:</strong> select the row, right-click, delete.</li>
+          <li>Changes don't go live until you click Sync.</li>
+        </ul>
+        <div class="img-placeholder" id="ph-step3">
+          <span class="ph-icon">&#128247;</span>
+          <span class="ph-label">Screenshot: Editing a row in the Booking Sheet (annotated)</span>
+          <span class="ph-filename">img-step3-edit-data.png</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card" data-step="4">
+      <div class="step-header">
+        <div class="step-number">4</div>
+        <div class="step-header-text">
+          <h2>Click Sync</h2>
+          <p>Pushes your changes live to the website.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Stay in the <strong>Borough Yards Booking Sheet</strong> — the Sync button is in the sheet itself.</li>
+          <li>Click it once to push your changes to the website.</li>
+          <li>Do this <strong>every time</strong> you make edits.</li>
+        </ul>
+        <div class="img-placeholder" id="ph-step4">
+          <span class="ph-icon">&#128247;</span>
+          <span class="ph-label">Screenshot: Sync button on the Hire a Space page</span>
+          <span class="ph-filename">img-step4-sync-button.png</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card" data-step="5">
+      <div class="step-header">
+        <div class="step-number">5</div>
+        <div class="step-header-text">
+          <h2>Done — Data is Live</h2>
+          <p>The updated availability is now visible to enquiry form users.</p>
+        </div>
+      </div>
+      <div class="step-body">
+        <ul>
+          <li>Refresh the <strong>Hire a Space page</strong> — changes appear immediately.</li>
+          <li>No action needed on the Public Data Sheet; it's handled automatically.</li>
+        </ul>
+        <div class="img-placeholder" id="ph-step5">
+          <span class="ph-icon">&#128247;</span>
+          <span class="ph-label">Screenshot: Hire a Space page showing updated availability</span>
+          <span class="ph-filename">img-step5-live-data.png</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <div class="step-nav" id="stepNav">
+    <button class="btn" id="prevBtn" onclick="changeStep(-1)" disabled>&#8592; Previous</button>
+    <button class="btn btn-primary" id="nextBtn" onclick="changeStep(1)">Next &#8594;</button>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>Quick answers</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do I ever need to edit the Public Data sheet?
+        <span class="chevron">&#9660;</span>
+      </button>
+      <div class="faq-a">No — it updates automatically when you sync.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Who else can make changes and sync?
+        <span class="chevron">&#9660;</span>
+      </button>
+      <div class="faq-a">Anyone with edit access to both sheets. Contact Smart Soho to add someone, or share directly from Google Sheets.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Data didn't update after clicking Sync?
+        <span class="chevron">&#9660;</span>
+      </button>
+      <div class="faq-a">Check you have edit access to <em>both</em> sheets, then try again. If the issue persists, contact Smart Soho.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do I need to sync after every change?
+        <span class="chevron">&#9660;</span>
+      </button>
+      <div class="faq-a">Yes. You can batch multiple edits and sync once — nothing goes live until you do.</div>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Prepared by <a href="https://smartsoho.co.uk/" target="_blank" style="color:inherit;font-weight:600;">Smart Soho</a> &mdash; for queries email <a href="mailto:somin@smartsoho.co.uk" style="color:inherit;">somin@smartsoho.co.uk</a></p>
+  </footer>
+
+  <script>
+    const TOTAL_STEPS = 5;
+    let current = 1;
+
+    // Build dots
+    const dotsEl = document.getElementById('stepDots');
+    for (let i = 1; i <= TOTAL_STEPS; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'dot' + (i === 1 ? ' active' : '');
+      btn.setAttribute('aria-label', 'Go to step ' + i);
+      btn.onclick = () => goToStep(i);
+      dotsEl.appendChild(btn);
+    }
+    const countEl = document.createElement('span');
+    countEl.className = 'step-count';
+    countEl.id = 'stepCount';
+    dotsEl.appendChild(countEl);
+
+    function updateUI() {
+      // Cards
+      document.querySelectorAll('.step-card').forEach(card => {
+        card.classList.toggle('active', parseInt(card.dataset.step) === current);
+      });
+      // Dots
+      document.querySelectorAll('.dot').forEach((dot, idx) => {
+        const step = idx + 1;
+        dot.className = 'dot';
+        if (step === current) dot.classList.add('active');
+        else if (step < current) dot.classList.add('done');
+      });
+      // Count
+      document.getElementById('stepCount').textContent = 'Step ' + current + ' of ' + TOTAL_STEPS;
+      // Buttons
+      const prev = document.getElementById('prevBtn');
+      const next = document.getElementById('nextBtn');
+      prev.disabled = current === 1;
+      if (current === TOTAL_STEPS) {
+        next.textContent = 'All done \u2713';
+        next.className = 'btn btn-success';
+        next.onclick = null;
+        next.disabled = false;
+      } else {
+        next.textContent = 'Next \u2192';
+        next.className = 'btn btn-primary';
+        next.onclick = () => changeStep(1);
+        next.disabled = false;
+      }
+    }
+
+    function goToStep(n) {
+      current = Math.max(1, Math.min(TOTAL_STEPS, n));
+      updateUI();
+      document.getElementById('stepWrapper').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function changeStep(dir) {
+      goToStep(current + dir);
+    }
+
+    // FAQ toggle
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const isOpen = answer.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+      if (!isOpen) {
+        answer.classList.add('open');
+        btn.classList.add('open');
+      }
+    }
+
+    updateUI();
+  </script>
+
+</body>
+</html>
